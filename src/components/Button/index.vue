@@ -1,6 +1,57 @@
 <script>
 export default {
-  name: "my-button",
+  name: 'Button',
+
+  props: {
+    color: {
+      type: String,
+      default: 'default',
+      validator(value) {
+        return ['default', 'primary', 'secondary', 'link'].includes(value)
+      }
+    },
+
+    size: {
+      type: String,
+      default: 'm',
+      validator(value) {
+        return ['xs', 's', 'm', 'l', 'xl', 'xxl'].includes(value)
+      }
+    },
+
+    tag: {
+      type: String,
+      default: 'button',
+      validator(value) {
+        return ['a', 'div', 'button'].includes(value)
+      }
+    },
+
+    block: {
+      type: Boolean,
+      default: false
+    },
+
+    circle: {
+      type: Boolean,
+      default: false
+    },
+
+    rounded: {
+      type: Boolean,
+      default: false
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+
+    processing: {
+      type: Boolean,
+      default: false
+    }
+  },
 
   methods: {
     onClick() {
@@ -9,16 +60,19 @@ export default {
        *
        * @event click
        */
-      this.$emit("click");
-    },
-  },
-};
+      this.$emit('click')
+    }
+  }
+}
 </script>
 
 <template>
-  <button class="button is-primary" @click="onClick">
+  <button
+    class="button is-primary"
+    @click="onClick"
+  >
     <!-- @slot default inner button content -->
-    <slot></slot>
+    <slot />
   </button>
 </template>
 
