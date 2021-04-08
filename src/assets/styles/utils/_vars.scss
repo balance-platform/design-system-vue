@@ -1,0 +1,27 @@
+//** Colors
+$base-color: #333;
+$primary-color: #4781EC;
+$primary-color-light: lighten(#4781EC, 20%);
+$primary-color-hover: #337BFF;
+$primary-color-focus: #3D6FCC;
+$gray-color-light: #E6E6E6;
+
+
+$base-color-dark: #231F20;
+$base-color-light: #808080;
+$primary-color-light: #DAE6FB;
+$warning-color: #FFB803;
+$success-color: #47B95A;
+$attention-color: #DA2032;
+$bg-color: #F7F7F7;
+$gray-color: #CCC;
+$gray-color-ligher: #F7F7F7;
+$border-color: #D8D8D8;
+
+
+//** Text
+$font-family-base: 'Muller', Avenir, Helvetica, Arial, sans-serif;
+$font-size-base: 16px;
+
+//** Cosmetic
+$border-radus: 4px;

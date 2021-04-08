@@ -1,6 +1,12 @@
 <script>
+import Loader from '@/components/Loader'
+
 export default {
   name: 'Button',
+
+  components: {
+    Loader
+  },
 
   props: {
     color: {
@@ -53,14 +59,26 @@ export default {
     }
   },
 
+  computed: {
+    btnClass() {
+      return [
+        'button',
+        this.color ? 'button_' + this.color : '',
+        {
+          'button_disabled': this.disabled,
+          'button_processing': this.processing
+        }
+      ]
+    },
+
+    isDisabled() {
+      return this.disabled || this.processing
+    }
+  },
+
   methods: {
-    onClick() {
-      /**
-       * Click event
-       *
-       * @event click
-       */
-      this.$emit('click')
+    onClick(event) {
+      this.$emit('click', event)
     }
   }
 }
@@ -68,22 +86,89 @@ export default {
 
 <template>
   <button
-    class="button is-primary"
+    :class="btnClass"
+    :disabled="isDisabled"
     @click="onClick"
   >
-    <!-- @slot default inner button content -->
+    <Loader
+      v-if="processing"
+      class="button__loader"
+    />
     <slot />
   </button>
 </template>
 
 <style lang="scss" scoped>
-button {
-  border: 1px solid #eee;
-  border-radius: 3px;
-  background-color: #ffffff;
+.button {
+  @extend %no-select;
+
+  display: inline-block;
+  margin: 0;
+  padding: 15px 25px;
+  color: $base-color;
+  font-size: $font-size-base;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  background-color: white;
+  border: none;
+  border-radius: $border-radus;
+  outline: 0;
   cursor: pointer;
-  font-size: 15pt;
-  padding: 3px 10px;
-  margin: 10px;
+  box-sizing: border-box;
+  transition: 0.1s;
+
+  &:focus,
+  &:hover {
+    color: $primary-color;
+    background-color: $primary-color-light;
+  }
+
+  &_primary {
+    color: white;
+    background-color: $primary-color;
+
+    &:hover {
+      color: white;
+      background-color: $primary-color-hover;
+    }
+
+    &:focus {
+      color: white;
+      background-color: $primary-color-focus;
+    }
+  }
+
+  &_processing {
+    position: relative;
+    pointer-events: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(white, 0.6);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+  }
+
+  &_disabled {
+    &,
+    &:hover,
+    &:focus {
+      color: white;
+      background: $gray-color-light;
+      cursor: default;
+    }
+  }
+
+  &__loader {
+    @extend %centered-self;
+  }
 }
 </style>
